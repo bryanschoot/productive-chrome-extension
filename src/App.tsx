@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {createMuiTheme, CssBaseline, ThemeProvider} from "@material-ui/core";
+import {ThemeBtn} from "./components";
+import {useStore} from "./stores/Store";
+import {observer} from "mobx-react-lite";
 
-function App() {
+const App = observer(() => {
+  const { themeStore } = useStore();
+  const { isDarkMode } = themeStore;
+
+  const theme = createMuiTheme({
+    palette: {
+      type: isDarkMode ? "dark" : "light",
+    },
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <ThemeProvider theme={theme}>
+        <CssBaseline/>
+        <ThemeBtn />
+      </ThemeProvider>
   );
-}
+});
 
 export default App;
